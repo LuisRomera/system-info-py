@@ -1,6 +1,5 @@
 import glob
 import os
-import time
 
 from logger import logger
 
