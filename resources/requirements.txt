@@ -1,2 +1,6 @@
 flask==1.1.1
-flask-classful==0.14.2
+matplotlib == 3.1.1
+schedule == 0.6.0
+requests == 2.22.0
+logger == 1.4
+pymongo == 3.9.0

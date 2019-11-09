@@ -1,7 +1,14 @@
 {
   "name-app": "system-corsair-py",
   "server": {
+    "host": "192.168.0.17",
     "port": 8081,
     "path_corsair": "C:\\Users\\larom\\Desktop\\registro\\"
-  }
+  },
+  "open_hardware_monitor": {
+    "host": "192.168.0.17",
+    "port": "8085"
+  },
+  "time_update": 0.5,
+  "max_time": 100
 }

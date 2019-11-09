@@ -16,4 +16,4 @@ def send_info_commander_pro():
 
 
 logger.info("Init server ...")
-app.run()
+app.run(host='0.0.0.0', port=env['server']['port'])
