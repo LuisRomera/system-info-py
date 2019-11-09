@@ -2,6 +2,7 @@ import json
 import time
 
 from config.environment import get_config
+from utils.parser import parse_json
 
 
 class DataRequest:
@@ -11,25 +12,18 @@ class DataRequest:
 
     def __init__(self, time_scheduler=None, data_ohm=None, data_ccp=None, update=None):
         """
-
         :param time_scheduler:
         :param data_ohm:
         :param data_ccp:
         :param update:
         """
-        self.time_scheduler = time_scheduler
+        self.time_scheduler = time_scheduler + 1
         env = get_config()
-        while True:
-            self.data_ohm = self.get_ohm_json(
-                'http://' + env['server']['host'] + ':' + env['open_hardware_monitor']['port'] + '/data.json')
-            self.data_ccp = self \
-                .get_ohm_json('http://' + env['server']['host'] + ':' + str(env['server']['port']) + '/commanderPro/')
-
-            if self.time_scheduler is 0:
-                self.time_scheduler = 1 + self.time_scheduler
-                break
-        time.sleep(env['time_update'])
-        self.update = True
+        self.data_ohm = parse_json(self.get_ohm_json(
+            'http://' + env['server']['host'] + ':' + env['open_hardware_monitor']['port'] + '/data.json'))
+        self.data_ccp = self \
+            .get_ohm_json('http://' + env['server']['host'] + ':' + str(env['server']['port']) + '/commanderPro/')
+        self.update = {"graphic_cpu": True, "graphic_gpu": True}
 
     @staticmethod
     def get_ohm_json(url):

@@ -1,11 +1,12 @@
 import threading
+import time
 
 from logger import logger
 from matplotlib import animation
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-
 from config.environment import get_config
 from data_parser.data_resquest import DataRequest
+from ui.animation.data import Data
 from ui.figures.figure_main import FigureMain
 
 try:
@@ -28,10 +29,10 @@ def get_data(t, datos):
     :param i:
     :return:
     """
-    list_red.append(1)
-    list_blue.append(1)
-    list_green.append(1)
-    list_green.append(0)
+    list_red.append(50)
+    list_blue.append(60)
+    list_green.append(70)
+    list_green.append(20)
     list_x.append(t)
     # if len(list_x) > env['max_time'] + 2:
     if list_x[-1] > env['max_time'] + 2:
@@ -55,9 +56,10 @@ def get_data(t, datos):
 class App(tk.Frame):
 
     def worker_request(self):
-        data = DataRequest(time_scheduler=self.t)
-        logger.info(str(data.__dict__))
-        return DataRequest(time_scheduler=self.t)
+        while True:
+            logger.info(str(self.data_request.__dict__))
+            self.data_request = DataRequest(time_scheduler=self.data_request.time_scheduler)
+            time.sleep(env['time_update'])
 
     """
     Main class ui. Write screen
@@ -66,8 +68,10 @@ class App(tk.Frame):
     def __init__(self, master=None, **kwargs):
         self.t = 0
         # Data receiver request
-        self.data_request = self.worker_request()
-        threading.Thread(target=self.worker_request).start()
+        self.data_request = DataRequest(time_scheduler=0)
+        t = threading.Thread(target=self.worker_request)
+        t.start()
+        self.data_updated = Data()
 
         # Interface
         tk.Frame.__init__(self, master, **kwargs)
@@ -78,27 +82,35 @@ class App(tk.Frame):
 
         # Figures
         self.figures = FigureMain()
-        self.canvas = FigureCanvasTkAgg(self.figures.fig, master=self)
-        self.canvas.get_tk_widget().pack()
-
+        self.list_canvas = list(map(lambda canvas: FigureCanvasTkAgg(canvas.fig, master=self), self.figures.graphics))
+        self.list_canvas = list(map(lambda c: c.get_tk_widget().pack(), self.list_canvas))
         self.start()
 
     def start(self):
-        self.ani = animation.FuncAnimation(
-            self.figures.fig,
-            self.update_graph,
-            interval=int(self.interval.get()),
-            repeat=False, blit=True)
+        """
+        Strat animations
+        :return:
+        """
+        self.ani_graphic_cpu = animation.FuncAnimation(self.figures.graphics[0].fig, self.update_fig,
+                                                       interval=100)
+        self.ani_graphic_gpu = animation.FuncAnimation(self.figures.graphics[1].fig, self.update_fig,
+                                                       interval=100)
 
-        self.ani._start()
-
-    def update_graph(self, i):
-        if self.data_request.update is True:
-            self.data_request.update = False
-            self.figures.lines[0].set_data(get_data(self.t, self.data_request.data_ccp)[0])
-            self.figures.lines[1].set_data(get_data(self.t, self.data_request.data_ccp)[0])
-            self.figures.lines[2].set_data(get_data(self.t, self.data_request.data_ccp)[0])
-        return self.figures.lines
+    def update_fig(self, i):
+        """
+        Update animated figures
+        :param i:
+        :return:
+        """
+        new_data = self.data_updated.get_data_update(data_request=self.data_request, data=self.data_updated)
+        if self.data_request.update['graphic_cpu'] is True:
+            self.data_request.update['graphic_cpu'] = False
+            self.figures.graphics[0].lines[0].set_data(new_data[0])
+            self.figures.graphics[0].lines[1].set_data(new_data[1])
+        if self.data_request.update['graphic_gpu'] is True:
+            self.data_request.update['graphic_gpu'] = False
+            self.figures.graphics[1].lines[0].set_data(new_data[0])
+            self.figures.graphics[1].lines[1].set_data(new_data[1])
 
 
 def get_config_ui():
@@ -109,7 +121,7 @@ def get_config_ui():
     """
     root = tk.Tk()
     root.configure(background='black')
-    root.attributes("-fullscreen", True)
+    # root.attributes("-fullscreen", True)
     return root
 
 
