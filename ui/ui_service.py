@@ -14,44 +14,7 @@ try:
 except ImportError:
     import tkinter as tk
 
-# ---------------------------------------------------------------
-list_blue = []
-list_red = []
-list_green = []
-list_x = []
 env = get_config()
-
-
-def get_data(t, datos):
-    """
-    replace this function with whatever you want to provide the data
-    for now, we just return soem random data
-    :param i:
-    :return:
-    """
-    list_red.append(50)
-    list_blue.append(60)
-    list_green.append(70)
-    list_green.append(20)
-    list_x.append(t)
-    # if len(list_x) > env['max_time'] + 2:
-    if list_x[-1] > env['max_time'] + 2:
-        del list_x[-1]
-        list_blue.pop(0)
-        list_red.pop(0)
-        list_green.pop(0)
-
-    data = []
-    line_1 = list_x, list_red
-    line_2 = list_x, list_blue
-    line_3 = list_x, list_green
-    data.append(line_1)
-    data.append(line_2)
-    data.append(line_3)
-    return data
-
-
-# ----------------------------------------
 
 class App(tk.Frame):
 
@@ -66,9 +29,8 @@ class App(tk.Frame):
     """
 
     def __init__(self, master=None, **kwargs):
-        self.t = 0
         # Data receiver request
-        self.data_request = DataRequest(time_scheduler=0)
+        self.data_request = DataRequest(time_scheduler=-2)
         t = threading.Thread(target=self.worker_request)
         t.start()
         self.data_updated = Data()
@@ -91,10 +53,8 @@ class App(tk.Frame):
         Strat animations
         :return:
         """
-        self.ani_graphic_cpu = animation.FuncAnimation(self.figures.graphics[0].fig, self.update_fig,
-                                                       interval=100)
-        self.ani_graphic_gpu = animation.FuncAnimation(self.figures.graphics[1].fig, self.update_fig,
-                                                       interval=100)
+        self.ani_graphic_cpu = animation.FuncAnimation(self.figures.graphics[0].fig, self.update_fig)
+        self.ani_graphic_gpu = animation.FuncAnimation(self.figures.graphics[1].fig, self.update_fig)
 
     def update_fig(self, i):
         """

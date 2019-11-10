@@ -1,5 +1,6 @@
 import json
-import time
+
+from logger import logger
 
 from config.environment import get_config
 from utils.parser import parse_json
@@ -21,9 +22,13 @@ class DataRequest:
         env = get_config()
         self.data_ohm = parse_json(self.get_ohm_json(
             'http://' + env['server']['host'] + ':' + env['open_hardware_monitor']['port'] + '/data.json'))
+
+        logger.info(str(self.data_ohm.__dict__))
         self.data_ccp = self \
             .get_ohm_json('http://' + env['server']['host'] + ':' + str(env['server']['port']) + '/commanderPro/')
         self.update = {"graphic_cpu": True, "graphic_gpu": True}
+
+        logger.info(str(self.data_ccp))
 
     @staticmethod
     def get_ohm_json(url):

@@ -18,5 +18,5 @@ def parser_mother_board(pc_componens):
         fans_dict = list(filter(lambda p: p.get('Text', {}) in 'Fans', properties_mother_board))[0]
         return list(map(lambda f: Fan().parse_fan(f, fans_dict.get('ImageURL')), get_children(fans_dict)))
     except Exception as ex:
-        logger.error("No mother board info")
+        logger.debug("No mother board info")
         return None
