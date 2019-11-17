@@ -10,5 +10,5 @@
     "port": "8085"
   },
   "time_update": 0.5,
-  "max_time": 100
+  "max_time": 300
 }

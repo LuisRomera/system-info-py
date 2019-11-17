@@ -7,6 +7,7 @@ from model.component import Component
 from model.cores import Core
 from model.cpu import Cpu
 from model.data import Data
+from model.fan import Fan
 from model.gpu import Gpu
 from model.pc import Pc
 from model.values import Value
@@ -45,7 +46,7 @@ def get_prop_cpu(prop):
                     filter(lambda x: "CPU" in x.get("Text") and "Total" not in x.get("Text"), prop)))
 
 
-def parse_json(json):
+def parse_json_ohm(json):
     """
     Parse request json
     :return:
@@ -85,13 +86,23 @@ def parse_json(json):
             t = t + core.temp.value
             l = l + core.load.value
             c = c + core.frec.value
-        cpu = Cpu(name, cores, l/len(cores), t/len(cores))
+        cpu = Cpu(name=name, cores=cores, load_total=l / len(cores), temp_total=list(filter(lambda c: 'CPU Package' in str(c), temp))[0]['CPU Package'][0])
 
         gpu_json = list(filter(lambda c: str(c.name) in GPU, pc_componens))[0]
-        gpu_temp = get_children(list(filter(lambda c: str(c['Text']) in "Temperatures", gpu_json.properties))[0])[0]['Value']
+        gpu_temp = get_children(list(filter(lambda c: str(c['Text']) in "Temperatures", gpu_json.properties))[0])[0][
+            'Value']
         gpu_load = get_children(list(filter(lambda c: str(c['Text']) in "Load", gpu_json.properties))[0])[0]['Value']
         gpu = Gpu(name=gpu_json.name, temp=Data(gpu_temp), load=Data(gpu_load))
         return Pc(cpu=cpu, fans=fans, gpu=gpu)
     except Exception as ex:
         logger.error(str(ex))
         return None
+
+
+def parse_json_ccp(json):
+    keys_fans = list(filter(lambda key: 'FAN' in key.upper(), json.keys()))
+    fans = list(map(
+        lambda key: Fan(name=key, speed_value=json[key].lower().replace('rpm', ''), speed_max=None, speed_min=None,
+                        speed_unit='rpm', image=None), keys_fans))
+
+    return Pc(fans=fans)

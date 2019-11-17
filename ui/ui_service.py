@@ -4,6 +4,8 @@ import time
 from logger import logger
 from matplotlib import animation
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+
+from config.desing import font_temp
 from config.environment import get_config
 from data_parser.data_resquest import DataRequest
 from ui.animation.data import Data
@@ -15,6 +17,7 @@ except ImportError:
     import tkinter as tk
 
 env = get_config()
+
 
 class App(tk.Frame):
 
@@ -43,7 +46,7 @@ class App(tk.Frame):
         self.interval.insert(0, '10')
 
         # Figures
-        self.figures = FigureMain()
+        self.figures = FigureMain(data=self.data_request)
         self.list_canvas = list(map(lambda canvas: FigureCanvasTkAgg(canvas.fig, master=self), self.figures.graphics))
         self.list_canvas = list(map(lambda c: c.get_tk_widget().pack(), self.list_canvas))
         self.start()
@@ -63,14 +66,22 @@ class App(tk.Frame):
         :return:
         """
         new_data = self.data_updated.get_data_update(data_request=self.data_request, data=self.data_updated)
+
         if self.data_request.update['graphic_cpu'] is True:
             self.data_request.update['graphic_cpu'] = False
-            self.figures.graphics[0].lines[0].set_data(new_data[0])
-            self.figures.graphics[0].lines[1].set_data(new_data[1])
+            self.figures.graphics[0].lines[0].set_data(new_data['graphics'][0])
+            self.figures.graphics[0].lines[1].set_data(new_data['graphics'][1])
+            self.figures.graphics[0].text_temp.set_text(new_data['temp_cpu'])
+            self.figures.graphics[0].text_load.set_text(new_data['load_cpu'])
+
         if self.data_request.update['graphic_gpu'] is True:
             self.data_request.update['graphic_gpu'] = False
-            self.figures.graphics[1].lines[0].set_data(new_data[0])
-            self.figures.graphics[1].lines[1].set_data(new_data[1])
+            self.figures.graphics[1].lines[0].set_data(new_data['graphics'][2])
+            self.figures.graphics[1].lines[1].set_data(new_data['graphics'][3])
+            self.figures.graphics[1].text_temp.set_text(new_data['temp_gpu'])
+            self.figures.graphics[1].text_load.set_text(new_data['load_gpu'])
+
+
 
 
 def get_config_ui():
@@ -82,6 +93,7 @@ def get_config_ui():
     root = tk.Tk()
     root.configure(background='black')
     # root.attributes("-fullscreen", True)
+    root.geometry("800x480")
     return root
 
 

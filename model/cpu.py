@@ -3,7 +3,12 @@ class Cpu:
         self.name = name
         self.cores = cores
         self.load_total = load_total
-        self.temp_total = temp_total
+
+        # tmp = list(filter(lambda c: 'CPU Package' in str(c), temp))[0]['CPU Package'][0]
+        if ',' in temp_total:
+            self.temp_total = float(temp_total.replace(',', '.'))
+        else:
+            self.temp_total = float(0.00)
 
     def parse_cpu(self, json, image=None):
         self.name = json.get('Text', None)

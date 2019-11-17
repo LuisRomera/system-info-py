@@ -2,13 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0c587b8f-c63c-45cd-aa07-1d4a673b8bc0" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/ui/figures/table_text.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/__main__.py" beforeDir="false" afterPath="$PROJECT_DIR$/__main__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data_parser/data_resquest.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_parser/data_resquest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/cpu.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/cpu.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/resources/config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/resources/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/animation/data.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/animation/data.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/figures/figure_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/figures/figure_main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/figures/graphic.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/figures/graphic.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/ui_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/ui_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/mother_board_parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/mother_board_parser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/parser.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -138,7 +142,14 @@
       <option name="project" value="LOCAL" />
       <updated>1573332475109</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Change port commander pro">
+      <created>1573388084456</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1573388084456</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -157,20 +168,46 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Init ui" />
     <MESSAGE value="Add animation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add animation" />
+    <MESSAGE value="Change port commander pro" />
+    <option name="LAST_COMMIT_MESSAGE" value="Change port commander pro" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/utils/mother_board_parser.py</url>
-          <line>20</line>
-          <option name="timeStamp" value="27" />
+          <url>file://$PROJECT_DIR$/ui/animation/data.py</url>
+          <line>43</line>
+          <option name="timeStamp" value="38" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/utils/mother_board_parser.py</url>
+          <url>file://$PROJECT_DIR$/ui/ui_service.py</url>
+          <line>74</line>
+          <option name="timeStamp" value="40" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/ui/figures/figure_main.py</url>
           <line>12</line>
-          <option name="timeStamp" value="28" />
+          <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/utils/parser.py</url>
+          <line>90</line>
+          <option name="timeStamp" value="48" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/utils/parser.py</url>
+          <line>94</line>
+          <option name="timeStamp" value="49" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/ui/animation/data.py</url>
+          <line>42</line>
+          <option name="timeStamp" value="50" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/utils/parser.py</url>
+          <line>88</line>
+          <option name="timeStamp" value="51" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
