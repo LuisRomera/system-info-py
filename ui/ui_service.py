@@ -5,7 +5,6 @@ from logger import logger
 from matplotlib import animation
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
-from config.desing import font_temp
 from config.environment import get_config
 from data_parser.data_resquest import DataRequest
 from ui.animation.data import Data
@@ -23,9 +22,12 @@ class App(tk.Frame):
 
     def worker_request(self):
         while True:
-            logger.info(str(self.data_request.__dict__))
-            self.data_request = DataRequest(time_scheduler=self.data_request.time_scheduler)
-            time.sleep(env['time_update'])
+            try:
+                logger.info(str(self.data_request.__dict__))
+                self.data_request = DataRequest(time_scheduler=self.data_request.time_scheduler)
+                time.sleep(env['time_update'])
+            except Exception as ex:
+                pass
 
     """
     Main class ui. Write screen
@@ -33,7 +35,10 @@ class App(tk.Frame):
 
     def __init__(self, master=None, **kwargs):
         # Data receiver request
-        self.data_request = DataRequest(time_scheduler=-2)
+        try:
+            self.data_request = DataRequest(time_scheduler=-2)
+        except Exception as ex:
+            self.data_request = None
         t = threading.Thread(target=self.worker_request)
         t.start()
         self.data_updated = Data()
@@ -65,21 +70,26 @@ class App(tk.Frame):
         :param i:
         :return:
         """
-        new_data = self.data_updated.get_data_update(data_request=self.data_request, data=self.data_updated)
+        try:
+            logger.info("Update")
+            new_data = self.data_updated.get_data_update(data_request=self.data_request, data=self.data_updated)
 
-        if self.data_request.update['graphic_cpu'] is True:
-            self.data_request.update['graphic_cpu'] = False
-            self.figures.graphics[0].lines[0].set_data(new_data['graphics'][0])
-            self.figures.graphics[0].lines[1].set_data(new_data['graphics'][1])
-            self.figures.graphics[0].text_temp.set_text(new_data['temp_cpu'])
-            self.figures.graphics[0].text_load.set_text(new_data['load_cpu'])
+            if self.data_request.update['graphic_cpu'] is True:
+                self.data_request.update['graphic_cpu'] = False
+                self.figures.graphics[0].lines[0].set_data(new_data['graphics'][0])
+                self.figures.graphics[0].lines[1].set_data(new_data['graphics'][1])
+                self.figures.graphics[0].text_temp.set_text(new_data['temp_cpu'])
+                self.figures.graphics[0].text_load.set_text(new_data['load_cpu'])
 
-        if self.data_request.update['graphic_gpu'] is True:
-            self.data_request.update['graphic_gpu'] = False
-            self.figures.graphics[1].lines[0].set_data(new_data['graphics'][2])
-            self.figures.graphics[1].lines[1].set_data(new_data['graphics'][3])
-            self.figures.graphics[1].text_temp.set_text(new_data['temp_gpu'])
-            self.figures.graphics[1].text_load.set_text(new_data['load_gpu'])
+            if self.data_request.update['graphic_gpu'] is True:
+                self.data_request.update['graphic_gpu'] = False
+                self.figures.graphics[1].lines[0].set_data(new_data['graphics'][2])
+                self.figures.graphics[1].lines[1].set_data(new_data['graphics'][3])
+                self.figures.graphics[1].text_temp.set_text(new_data['temp_gpu'])
+                self.figures.graphics[1].text_load.set_text(new_data['load_gpu'])
+        except Exception as ex:
+            time.sleep(5)
+            pass
 
 
 
