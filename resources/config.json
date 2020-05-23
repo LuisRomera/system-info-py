@@ -1,7 +1,7 @@
 {
   "name-app": "system-corsair-py",
   "server": {
-    "host": "192.168.0.17",
+    "host": "192.168.0.30",
     "port": 8008,
     "path_corsair": "C:\\Users\\larom\\Desktop\\registro\\"
   },

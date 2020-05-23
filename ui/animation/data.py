@@ -1,4 +1,5 @@
 from config.environment import get_config
+from parse.reciver_service import ReciverService
 
 
 class Data:
@@ -9,13 +10,13 @@ class Data:
         self.list_gpu_load = []
         self.time = []
 
-    def get_data_update_graphics(self, data_request=None, data=None):
-        data.list_cpu_temp.append(data_request.data_ohm.cpu.temp_total)
-        data.list_cpu_load.append(data_request.data_ohm.cpu.load_total)
-        data.list_gpu_temp.append(data_request.data_ohm.gpu.temp.value)
-        data.list_gpu_load.append(data_request.data_ohm.gpu.load.value)
+    def get_data_update_graphics(self, data_request=None, data=None, time_scheduler=None):
+        data.list_cpu_temp.append(data_request.cpu.temp_package.value)
+        data.list_cpu_load.append(data_request.cpu.load.value)
+        data.list_gpu_temp.append(data_request.gpu.temp_core.value)
+        data.list_gpu_load.append(data_request.gpu.load.value)
 
-        data.time.append(data_request.time_scheduler)
+        data.time.append(time_scheduler)
 
         if data.time[-1] > get_config()['max_time']:
             del data.time[-1]
@@ -39,14 +40,19 @@ class Data:
         return data_graphic
 
     def get_data_update(self, data_request=None, data=None):
-        unit_temp = data_request.data_ohm.gpu.temp.unit
-        unit_load = data_request.data_ohm.gpu.load.unit
+        # unit_temp = data_request.data_ohm.gpu.temp.unit
+
+        time_scheduler = data_request.time_scheduler
+        data_request = ReciverService()
+        unit_temp = data_request.cpu.temp_package.unit
+        # unit_load = data_request.data_ohm.gpu.load.unit
+        unit_load = data_request.cpu.load.unit
         update_data = {
-            'graphics': self.get_data_update_graphics(data_request, data),
-            'temp_cpu': 'Temp: ' + "{0:.2f}".format(data_request.data_ohm.cpu.temp_total) + f'{unit_temp}',
-            'load_cpu': 'Load: ' + "{0:.2f}".format(data_request.data_ohm.cpu.load_total) + f'{unit_load}',
-            'temp_gpu': 'Temp: ' + "{0:.2f}".format(data_request.data_ohm.gpu.temp.value) + f'{unit_temp}',
-            'load_gpu': 'Load: ' + "{0:.2f}".format(data_request.data_ohm.gpu.load.value) + f'{unit_load}'
+            'graphics': self.get_data_update_graphics(data_request, data, time_scheduler),
+            'temp_cpu': 'Temp: ' + "{0:.2f}".format(data_request.cpu.temp_package.value) + f'{unit_temp}',
+            'load_cpu': 'Load: ' + "{0:.2f}".format(data_request.cpu.load.value) + f'{unit_load}',
+            'temp_gpu': 'Temp: ' + "{0:.2f}".format(data_request.gpu.temp_core.value) + f'{unit_temp}',
+            'load_gpu': 'Load: ' + "{0:.2f}".format(data_request.gpu.load.value) + f'{unit_load}'
         }
 
 

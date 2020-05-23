@@ -4,6 +4,8 @@ import json
 from logger import logger
 
 from config.environment import get_config
+from model.data import Data
+from parse.reciver_service import ReciverService
 from utils.parser import parse_json_ohm, parse_json_ccp
 
 
@@ -19,19 +21,28 @@ class DataRequest:
         :param data_ccp:
         :param update:
         """
-        self.time_scheduler = time_scheduler + 1
-        env = get_config()
-        self.data_ohm = parse_json_ohm(self.get_ohm_json(
-            'http://' + env['server']['host'] + ':' + env['open_hardware_monitor']['port'] + '/data.json'))
 
-        self.data_ccp = parse_json_ccp(self \
-                                       .get_ohm_json(
-            'http://' + env['server']['host'] + ':' + str(env['server']['port']) + '/commanderPro/'))
+        self.time_scheduler = time_scheduler + 1
+
+        self.pc = ReciverService()
+
+        # env = get_config()
+        # self.data_ohm = parse_json_ohm(self.get_ohm_json(
+        #    'http://' + env['server']['host'] + ':' + env['open_hardware_monitor']['port'] + '/data.json'))
+
+        # Data(self.data_ohm)
+
+
+
+        # self.data_ccp = parse_json_ccp(self \
+        #                                .get_ohm_json(
+        #     'http://' + env['server']['host'] + ':' + str(env['server']['port']) + '/commanderPro/'))
+        # self.update = {"graphic_cpu": True, "graphic_gpu": True}
         self.update = {"graphic_cpu": True, "graphic_gpu": True}
 
-        self.fans = self.append_elemts(self.data_ccp.fans, self.data_ohm.fans)
+        # self.fans = self.append_elemts(self.data_ccp.fans, self.data_ohm.fans)
 
-        logger.info(str(self.data_ohm.__dict__))
+        # logger.info(str(self.data_ohm.__dict__))
 
     @staticmethod
     def get_ohm_json(url):

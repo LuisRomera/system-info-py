@@ -8,7 +8,7 @@ def get_children(json):
     return json.get('Children', {})
 
 
-def parser_mother_board(pc_componens):
+def parser_mother_board(sawzq):
     # Mother board
     mother_board = list(filter(lambda c: str(c.name) in MOTHER_BOARD, pc_componens))[0]
     try:

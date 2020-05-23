@@ -23,7 +23,6 @@ class App(tk.Frame):
     def worker_request(self):
         while True:
             try:
-                logger.info(str(self.data_request.__dict__))
                 self.data_request = DataRequest(time_scheduler=self.data_request.time_scheduler)
                 time.sleep(env['time_update'])
             except Exception as ex:
@@ -71,7 +70,7 @@ class App(tk.Frame):
         :return:
         """
         try:
-            logger.info("Update")
+            # logger.info("Update")
             new_data = self.data_updated.get_data_update(data_request=self.data_request, data=self.data_updated)
 
             if self.data_request.update['graphic_cpu'] is True:
@@ -90,8 +89,6 @@ class App(tk.Frame):
         except Exception as ex:
             time.sleep(5)
             pass
-
-
 
 
 def get_config_ui():
