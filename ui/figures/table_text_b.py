@@ -25,5 +25,6 @@ class TableTextB:
                                        "Pump: " + str(data.pc.pump.all_fans[0].speed.value) +
                                        data.pc.pump.all_fans[0].speed.unit, font_normal)
 
-
+        count += 1
+        self.fig.text(0.6, 0.9 - count * 0.07 - 0.03, 'Storage', fontdict=font_label)
 

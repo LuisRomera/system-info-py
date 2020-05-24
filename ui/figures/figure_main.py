@@ -14,7 +14,7 @@ class FigureMain:
             # Graphics
             self.graphics = [Graphic('CPU'), Graphic('GPU')]
 
-            self.table_text = [TableText(name='Cores', list_table=data.pc.cpu.threads),
+            self.table_text = [TableText(name='CORES', list_table=data.pc.cpu.threads),
                                TableTextB(name='Others', data=data)]
 
 
