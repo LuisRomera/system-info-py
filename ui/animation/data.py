@@ -54,6 +54,13 @@ class Data:
             'temp_gpu': 'Temp: ' + "{0:.2f}".format(data_request.gpu.temp_core.value) + f'{unit_temp}',
             'load_gpu': 'Load: ' + "{0:.2f}".format(data_request.gpu.load.value) + f'{unit_load}'
         }
+        count = 0
+        for thread in data_request.cpu.threads.load:
+            count += 1
+            update_data['thread' + str(count)] = 'core ' + str(count) + ': ' + str(int(thread.value)) + '%'
+
+        print(update_data)
+
 
 
         return update_data

@@ -47,12 +47,21 @@ class App(tk.Frame):
         self.running = True
         self.ani = True
         self.interval = tk.Entry(width=0)
+
         self.interval.insert(0, '10')
 
         # Figures
-        self.figures = FigureMain(data=self.data_request)
+        self.figures = FigureMain(data=self.data_request, tk=self.tk)
         self.list_canvas = list(map(lambda canvas: FigureCanvasTkAgg(canvas.fig, master=self), self.figures.graphics))
-        self.list_canvas = list(map(lambda c: c.get_tk_widget().pack(), self.list_canvas))
+        self.list_canvas_text = list(map(lambda canvas: FigureCanvasTkAgg(canvas.fig, master=self), self.figures.table_text))
+
+        self.list_canvas[0].get_tk_widget().grid(column=0, row=0)
+        self.list_canvas_text[0].get_tk_widget().grid(column=1, row=0)
+        self.list_canvas[1].get_tk_widget().grid(column=0, row=1)
+
+
+        # self.list_canvas = list(map(lambda c: c.get_tk_widget().pack(side=tk.LEFT), self.list_canvas))
+
         self.start()
 
     def start(self):
@@ -61,6 +70,10 @@ class App(tk.Frame):
         :return:
         """
         self.ani_graphic_cpu = animation.FuncAnimation(self.figures.graphics[0].fig, self.update_fig)
+
+        self.ani_text_A = animation.FuncAnimation(self.figures.table_text[0].fig, self.update_fig)
+
+
         self.ani_graphic_gpu = animation.FuncAnimation(self.figures.graphics[1].fig, self.update_fig)
 
     def update_fig(self, i):
@@ -79,6 +92,8 @@ class App(tk.Frame):
                 self.figures.graphics[0].lines[1].set_data(new_data['graphics'][1])
                 self.figures.graphics[0].text_temp.set_text(new_data['temp_cpu'])
                 self.figures.graphics[0].text_load.set_text(new_data['load_cpu'])
+                for cpu in self.figures.table_text[0].text_cpu:
+                    cpu.set_text(new_data['load_cpu'])
 
             if self.data_request.update['graphic_gpu'] is True:
                 self.data_request.update['graphic_gpu'] = False

@@ -13,3 +13,9 @@ font_load = {'family': 'serif',
              'weight': 'normal',
              'size': 12
              }
+
+font_normal = {'family': 'serif',
+               'color': 'white',
+               'weight': 'normal',
+               'size': 9
+               }

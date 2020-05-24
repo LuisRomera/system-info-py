@@ -1,5 +1,4 @@
 from matplotlib import pyplot as plt
-from matplotlib.pyplot import text
 
 from config.desing import font_label, font_temp, font_load
 from config.environment import get_config
@@ -12,10 +11,10 @@ class Graphic:
 
     def __init__(self, name=None):
         self.env = get_config()
-        self.fig = plt.Figure(facecolor='black', figsize=(5, 2.3), dpi=110)
-        self.fig.text(0, 0.9, name, fontdict=font_label)
+        self.fig = plt.Figure(facecolor='black', figsize=(4, 2.3), dpi=110)
+        self.fig.text(0.05, 0.9, name, fontdict=font_label)
         self.text_temp = self.fig.text(0.5, 0.9, 'Temp: ', fontdict=font_temp)
-        self.text_load = self.fig.text(0.13, 0.9, 'Load: ', fontdict=font_load)
+        self.text_load = self.fig.text(0.2, 0.9, 'Load: ', fontdict=font_load)
 
         # self.time_text = text(.5, .5, 'asdasdasd', fontsize=15)
 

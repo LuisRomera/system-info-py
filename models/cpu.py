@@ -15,9 +15,8 @@ class CPU:
             list(filter(lambda element: element['ImageURL'] in 'images_icon/cpu.png',
                         data['Children'][0]['Children']))[0]['Children']
 
-        self.threads = list(map(lambda t: Thread(t), list(filter(lambda elem: 'CPU' in elem['Text'],
-                                                            list(filter(lambda element: element['Text'] in 'Clocks',
-                                                                        cpu_data))[0]['Children']))))
+        self.threads = Thread(cpu_data)
+
         self.load = self.get_values(cpu_data, 'Load', 'CPU Total')
 
         self.temp_package = self.get_values(cpu_data, 'Temperatures', 'CPU Package')
