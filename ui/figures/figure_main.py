@@ -2,6 +2,7 @@ from ui.figures.graphic import Graphic
 from ui.figures.table_text import TableText
 import matplotlib.pyplot as plt
 
+from ui.figures.table_text_b import TableTextB
 
 
 class FigureMain:
@@ -13,7 +14,8 @@ class FigureMain:
             # Graphics
             self.graphics = [Graphic('CPU'), Graphic('GPU')]
 
-            self.table_text = [TableText(name='Cores', list_table=data.pc.cpu.threads)]
+            self.table_text = [TableText(name='Cores', list_table=data.pc.cpu.threads),
+                               TableTextB(name='Others', data=data)]
 
 
 

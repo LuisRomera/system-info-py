@@ -59,6 +59,7 @@ class App(tk.Frame):
         self.list_canvas[0].get_tk_widget().grid(column=0, row=0)
         self.list_canvas_text[0].get_tk_widget().grid(column=1, row=0)
         self.list_canvas[1].get_tk_widget().grid(column=0, row=1)
+        self.list_canvas_text[1].get_tk_widget().grid(column=1, row=1)
 
         self.start()
 
@@ -72,6 +73,8 @@ class App(tk.Frame):
         self.ani_text_A = animation.FuncAnimation(self.figures.table_text[0].fig, self.update_fig)
 
         self.ani_graphic_gpu = animation.FuncAnimation(self.figures.graphics[1].fig, self.update_fig)
+
+        self.ani_text_B = animation.FuncAnimation(self.figures.table_text[1].fig, self.update_fig)
 
         self.update_name = 'load'
     def update_fig(self, i):
@@ -107,6 +110,18 @@ class App(tk.Frame):
                 self.figures.graphics[1].lines[1].set_data(new_data['graphics'][3])
                 self.figures.graphics[1].text_temp.set_text(new_data['temp_gpu'])
                 self.figures.graphics[1].text_load.set_text(new_data['load_gpu'])
+                count = 0
+
+                for fan in self.figures.table_text[1].fans:
+                    fan.set_text(new_data['fans'][count])
+                    count += 1
+                self.figures.table_text[1].pump.set_text(new_data['pump'])
+                self.figures.table_text[1].text_gpu_menory_use.set_text(new_data['gpu']['used_memory'])
+                self.figures.table_text[1].text_gpu_menory_frec.set_text(new_data['gpu']['frec_memory'])
+                self.figures.table_text[1].text_gpu_shader.set_text(new_data['gpu']['shader'])
+
+
+
         except Exception as ex:
             time.sleep(5)
             pass

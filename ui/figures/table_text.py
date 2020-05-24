@@ -1,5 +1,3 @@
-from tkinter import Canvas
-
 import matplotlib.pyplot as plt
 
 from config.desing import font_label, font_normal
@@ -7,7 +5,7 @@ from config.desing import font_label, font_normal
 
 class TableText:
     def __init__(self, name=None, list_table=None):
-        self.fig = plt.Figure(facecolor='black', figsize=(3, 2.2), dpi=110)
+        self.fig = plt.Figure(facecolor='black', figsize=(3, 2.1), dpi=110)
         self.fig.text(0.4, 0.9, name, fontdict=font_label)
         self.text_cpu = []
 

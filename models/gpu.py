@@ -23,8 +23,14 @@ class GPU:
 
         self.load = self.get_values(gpu_data, 'Load', 'GPU Core')
 
-        self.menory_use = self.get_values(gpu_data, 'Data', 'GPU Memory Used')
+        self.memory_use = self.get_values(gpu_data, 'Data', 'GPU Memory Used')
 
-        self.menory_free = self.get_values(gpu_data, 'Data', 'GPU Memory Free')
+        self.memory_free = self.get_values(gpu_data, 'Data', 'GPU Memory Free')
 
-        self.menory_total = self.get_values(gpu_data, 'Data', 'GPU Memory Total')
+        self.memory_total = self.get_values(gpu_data, 'Data', 'GPU Memory Total')
+
+        self.frec_core = self.get_values(gpu_data, 'Clocks', 'GPU Core')
+
+        self.frec_memory = self.get_values(gpu_data, 'Clocks', 'GPU Memory')
+
+        self.shader = self.get_values(gpu_data, 'Clocks', 'GPU Shader')
