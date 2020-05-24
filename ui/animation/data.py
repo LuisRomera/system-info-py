@@ -56,7 +56,7 @@ class Data:
         for thread in data_request.pc.cpu.threads.load:
             count += 1
             if len(str(count)) == 1:
-                update_data['cores']['load']['thread' + str(count)] = 'Core  ' + str(count) + ': ' + str(int(thread.value)) + '%'
+                update_data['cores']['load']['thread' + str(count)] = 'Core ' + '  ' + str(count) + ': ' + str(int(thread.value)) + '%'
             else:
                 update_data['cores']['load']['thread' + str(count)] = 'Core ' + str(count) + ': ' + str(int(thread.value)) + '%'
 
@@ -65,7 +65,7 @@ class Data:
         for thread in data_request.pc.cpu.threads.frecuency_actual:
             count += 1
             if len(str(count)) == 1:
-                update_data['cores']['frec']['thread' + str(count)] = 'Core  ' + str(count) + ': ' + str(int(thread.value)) + 'MHz'
+                update_data['cores']['frec']['thread' + str(count)] = 'Core '+ '  ' + str(count) + ': ' + str(int(thread.value)) + 'MHz'
             else:
                 update_data['cores']['frec']['thread' + str(count)] = 'Core ' + str(count) + ': ' + str(int(thread.value)) + 'MHz'
 
