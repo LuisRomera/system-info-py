@@ -11,12 +11,10 @@ class Graphic:
 
     def __init__(self, name=None):
         self.env = get_config()
-        self.fig = plt.Figure(facecolor='black', figsize=(4, 2.3), dpi=110)
+        self.fig = plt.Figure(facecolor='black', figsize=(4, 2.2), dpi=110)
         self.fig.text(0.05, 0.9, name, fontdict=font_label)
         self.text_temp = self.fig.text(0.5, 0.9, 'Temp: ', fontdict=font_temp)
         self.text_load = self.fig.text(0.2, 0.9, 'Load: ', fontdict=font_load)
-
-        # self.time_text = text(.5, .5, 'asdasdasd', fontsize=15)
 
         self.ax1 = self.fig.add_subplot(111)
         self.ax1.patch.set_facecolor('black')

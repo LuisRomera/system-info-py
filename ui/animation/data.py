@@ -40,27 +40,33 @@ class Data:
         return data_graphic
 
     def get_data_update(self, data_request=None, data=None):
-        # unit_temp = data_request.data_ohm.gpu.temp.unit
-
-        time_scheduler = data_request.time_scheduler
-        data_request = ReciverService()
-        unit_temp = data_request.cpu.temp_package.unit
-        # unit_load = data_request.data_ohm.gpu.load.unit
-        unit_load = data_request.cpu.load.unit
+        unit_temp = data_request.pc.cpu.temp_package.unit
+        unit_load = data_request.pc.cpu.load.unit
         update_data = {
-            'graphics': self.get_data_update_graphics(data_request, data, time_scheduler),
-            'temp_cpu': 'Temp: ' + "{0:.2f}".format(data_request.cpu.temp_package.value) + f'{unit_temp}',
-            'load_cpu': 'Load: ' + "{0:.2f}".format(data_request.cpu.load.value) + f'{unit_load}',
-            'temp_gpu': 'Temp: ' + "{0:.2f}".format(data_request.gpu.temp_core.value) + f'{unit_temp}',
-            'load_gpu': 'Load: ' + "{0:.2f}".format(data_request.gpu.load.value) + f'{unit_load}'
+            'graphics': self.get_data_update_graphics(data_request.pc, data, data_request.time_scheduler),
+            'temp_cpu': 'Temp: ' + "{0:.2f}".format(data_request.pc.cpu.temp_package.value) + f'{unit_temp}',
+            'load_cpu': 'Load: ' + "{0:.2f}".format(data_request.pc.cpu.load.value) + f'{unit_load}',
+            'temp_gpu': 'Temp: ' + "{0:.2f}".format(data_request.pc.gpu.temp_core.value) + f'{unit_temp}',
+            'load_gpu': 'Load: ' + "{0:.2f}".format(data_request.pc.gpu.load.value) + f'{unit_load}'
         }
         count = 0
-        for thread in data_request.cpu.threads.load:
+        update_data['cores'] = {}
+        update_data['cores']['load'] = {}
+        update_data['cores']['frec'] = {}
+        for thread in data_request.pc.cpu.threads.load:
             count += 1
-            update_data['thread' + str(count)] = 'core ' + str(count) + ': ' + str(int(thread.value)) + '%'
+            if len(str(count)) == 1:
+                update_data['cores']['load']['thread' + str(count)] = 'Core  ' + str(count) + ': ' + str(int(thread.value)) + '%'
+            else:
+                update_data['cores']['load']['thread' + str(count)] = 'Core ' + str(count) + ': ' + str(int(thread.value)) + '%'
 
-        print(update_data)
+        count = 0
 
-
+        for thread in data_request.pc.cpu.threads.frecuency_actual:
+            count += 1
+            if len(str(count)) == 1:
+                update_data['cores']['frec']['thread' + str(count)] = 'Core  ' + str(count) + ': ' + str(int(thread.value)) + 'MHz'
+            else:
+                update_data['cores']['frec']['thread' + str(count)] = 'Core ' + str(count) + ': ' + str(int(thread.value)) + 'MHz'
 
         return update_data

@@ -53,14 +53,12 @@ class App(tk.Frame):
         # Figures
         self.figures = FigureMain(data=self.data_request, tk=self.tk)
         self.list_canvas = list(map(lambda canvas: FigureCanvasTkAgg(canvas.fig, master=self), self.figures.graphics))
-        self.list_canvas_text = list(map(lambda canvas: FigureCanvasTkAgg(canvas.fig, master=self), self.figures.table_text))
+        self.list_canvas_text = list(
+            map(lambda canvas: FigureCanvasTkAgg(canvas.fig, master=self), self.figures.table_text))
 
         self.list_canvas[0].get_tk_widget().grid(column=0, row=0)
         self.list_canvas_text[0].get_tk_widget().grid(column=1, row=0)
         self.list_canvas[1].get_tk_widget().grid(column=0, row=1)
-
-
-        # self.list_canvas = list(map(lambda c: c.get_tk_widget().pack(side=tk.LEFT), self.list_canvas))
 
         self.start()
 
@@ -73,9 +71,9 @@ class App(tk.Frame):
 
         self.ani_text_A = animation.FuncAnimation(self.figures.table_text[0].fig, self.update_fig)
 
-
         self.ani_graphic_gpu = animation.FuncAnimation(self.figures.graphics[1].fig, self.update_fig)
 
+        self.update_name = 'load'
     def update_fig(self, i):
         """
         Update animated figures
@@ -85,15 +83,23 @@ class App(tk.Frame):
         try:
             # logger.info("Update")
             new_data = self.data_updated.get_data_update(data_request=self.data_request, data=self.data_updated)
-
+            change = False
             if self.data_request.update['graphic_cpu'] is True:
                 self.data_request.update['graphic_cpu'] = False
                 self.figures.graphics[0].lines[0].set_data(new_data['graphics'][0])
                 self.figures.graphics[0].lines[1].set_data(new_data['graphics'][1])
                 self.figures.graphics[0].text_temp.set_text(new_data['temp_cpu'])
                 self.figures.graphics[0].text_load.set_text(new_data['load_cpu'])
+                count = 0
+                if len(new_data['graphics'][0][1]) % 30 == 0:
+                    if self.update_name in 'load':
+                        self.update_name = 'frec'
+                    else:
+                        self.update_name = 'load'
+
                 for cpu in self.figures.table_text[0].text_cpu:
-                    cpu.set_text(new_data['load_cpu'])
+                    count += 1
+                    cpu.set_text(new_data['cores'][self.update_name]['thread' + str(count)])
 
             if self.data_request.update['graphic_gpu'] is True:
                 self.data_request.update['graphic_gpu'] = False

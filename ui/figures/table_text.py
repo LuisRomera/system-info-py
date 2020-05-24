@@ -2,13 +2,13 @@ from tkinter import Canvas
 
 import matplotlib.pyplot as plt
 
-from config.desing import font_temp, font_label, font_normal
+from config.desing import font_label, font_normal
 
 
 class TableText:
     def __init__(self, name=None, list_table=None):
-        self.fig = plt.Figure(facecolor='black', figsize=(3, 2.3), dpi=110)
-        self.fig.text(0.05, 0.9, name, fontdict=font_label)
+        self.fig = plt.Figure(facecolor='black', figsize=(3, 2.2), dpi=110)
+        self.fig.text(0.4, 0.9, name, fontdict=font_label)
         self.text_cpu = []
 
         count = 0
@@ -22,7 +22,7 @@ class TableText:
             if count == 24:
                 count_w = 1
 
-            self.text_cpu.append(self.fig.text(count_w * 0.3 + 0.05, 0.9 - count_h * 0.07,
+            self.text_cpu.append(self.fig.text(count_w * 0.5 + 0.05, 0.9 - count_h * 0.07,
                                                'core ' + str(count) + ': ' + str(int(x.value)) + '%',
                                                fontdict=font_normal))
             if count == 12:
