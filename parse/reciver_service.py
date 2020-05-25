@@ -10,6 +10,7 @@ from models.cpu import CPU
 from models.fan import Fans
 from models.gpu import GPU
 from models.pump import Pump, Pumps
+from models.storage import Storage
 from models.thread import Thread
 
 env = get_config()
@@ -23,10 +24,11 @@ class ReciverService:
         self.cpu = CPU(self.data)
         self.gpu = GPU(self.data)
         string_mother_board = list(filter(lambda element: element['ImageURL'] in 'images_icon/nvidia.png' or element[
-            'ImageURL'] in 'images_icon/mainboard.png',self.data['Children'][0]['Children']))[0]['Children'][0]
+            'ImageURL'] in 'images_icon/mainboard.png', self.data['Children'][0]['Children']))[0]['Children'][0]
         self.fans = Fans(string_mother_board)
         self.pump = Pumps(string_mother_board)
-
+        self.storage = list(map(lambda hdd: Storage(hdd), list(
+            filter(lambda elem: elem['ImageURL'] in 'images_icon/hdd.png', self.data['Children'][0]['Children']))))
 
     def get_ohm_json(self, url):
         """

@@ -28,3 +28,10 @@ class TableTextB:
         count += 1
         self.fig.text(0.6, 0.9 - count * 0.07 - 0.03, 'Storage', fontdict=font_label)
 
+        self.list_storage = []
+        for storage in data.pc.storage:
+            count += 1
+            self.list_storage.append(self.fig.text(0.6, 0.87 - count * 0.07, storage.name + str(storage.used.value) +
+                                  storage.used.unit, font_normal))
+
+
