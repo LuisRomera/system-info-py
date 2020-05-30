@@ -49,8 +49,3 @@ class TableTextB:
             count += 1.2
             self.list_storage.append(self.fig.text(0.62, 0.86 - count * 0.07, storage.name + str(storage.used.value) +
                                                    storage.used.unit, font_small, size=8))
-
-"""
-        for s in self.list_storage:
-            s.set_bbox(dict(facecolor='red', alpha=0.5, edgecolor='red'))
-        """

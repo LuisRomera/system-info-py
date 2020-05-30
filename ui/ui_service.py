@@ -120,6 +120,12 @@ class App(tk.Frame):
                 self.figures.table_text[1].text_gpu_menory_frec.set_text(new_data['gpu']['frec_memory'])
                 self.figures.table_text[1].text_gpu_shader.set_text(new_data['gpu']['shader'])
 
+                count = 0
+                for text_storeage in self.figures.table_text[1].list_storage:
+                    self.figures.table_text[1].list_storage[count].set_text(new_data['storage']['string'][count])
+                    self.figures.table_text[1].bar[count].set_width(new_data['storage']['data'][count])
+                    count +=1
+
 
 
         except Exception as ex:

@@ -1,3 +1,5 @@
+import random
+
 from config.environment import get_config
 from parse.reciver_service import ReciverService
 
@@ -81,4 +83,10 @@ class Data:
                 update_data['fans'].append(fan.name + ":   " + str(fan.speed.value) + fan.speed.unit)
         update_data['pump'] = "Pump: " + str(data_request.pc.pump.all_fans[0].speed.value) + \
                               data_request.pc.pump.all_fans[0].speed.unit
+
+        update_data['storage'] = {}
+
+        update_data['storage']['string'] = list(map(lambda storage: storage.name + " " + str(storage.used.value) + storage.used.unit, data_request.pc.storage))
+        update_data['storage']['data'] = list(map(lambda s: int(float(s.used.value)), data_request.pc.storage))[::-1]
+
         return update_data
