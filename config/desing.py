@@ -19,3 +19,10 @@ font_normal = {'family': 'serif',
                'weight': 'normal',
                'size': 9
                }
+
+
+font_small = {'family': 'serif',
+               'color': 'white',
+               'weight': 'bold',
+               'size': 5
+               }
