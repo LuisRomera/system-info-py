@@ -9,7 +9,9 @@ from model.fan import Fan
 from models.cpu import CPU
 from models.fan import Fans
 from models.gpu import GPU
+from models.mother_board import MotherBoard
 from models.pump import Pump, Pumps
+from models.ram import RAM
 from models.storage import Storage
 from models.thread import Thread
 
@@ -27,8 +29,10 @@ class ReciverService:
             'ImageURL'] in 'images_icon/mainboard.png', self.data['Children'][0]['Children']))[0]['Children'][0]
         self.fans = Fans(string_mother_board)
         self.pump = Pumps(string_mother_board)
-        self.storage = list(map(lambda hdd: Storage(hdd), list(
-            filter(lambda elem: elem['ImageURL'] in 'images_icon/hdd.png', self.data['Children'][0]['Children']))))
+        self.storage = list(filter(lambda h: h.used is not None, list(map(lambda hdd: Storage(hdd), list(
+            filter(lambda elem: elem['ImageURL'] in 'images_icon/hdd.png', self.data['Children'][0]['Children']))))))
+        self.mother_board = MotherBoard(list(filter(lambda elem: elem['ImageURL'] in 'images_icon/mainboard.png', self.data['Children'][0]['Children']))[0])
+        self.ram = RAM(list(filter(lambda r: r['Text'] in 'Load', list(filter(lambda elem: elem['ImageURL'] in 'images_icon/ram.png', self.data['Children'][0]['Children']))[0]['Children']))[0]['Children'][0]['Value'])
 
     def get_ohm_json(self, url):
         """

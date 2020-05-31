@@ -46,10 +46,10 @@ class Data:
         unit_load = data_request.pc.cpu.load.unit
         update_data = {
             'graphics': self.get_data_update_graphics(data_request.pc, data, data_request.time_scheduler),
-            'temp_cpu': 'Temp: ' + "{0:.2f}".format(data_request.pc.cpu.temp_package.value) + f'{unit_temp}',
-            'load_cpu': 'Load: ' + "{0:.2f}".format(data_request.pc.cpu.load.value) + f'{unit_load}',
-            'temp_gpu': 'Temp: ' + "{0:.2f}".format(data_request.pc.gpu.temp_core.value) + f'{unit_temp}',
-            'load_gpu': 'Load: ' + "{0:.2f}".format(data_request.pc.gpu.load.value) + f'{unit_load}'
+            'temp_cpu': 'Temp: ' + str(int(data_request.pc.cpu.temp_package.value)) + unit_temp,
+            'load_cpu': 'Load: ' + str(int(data_request.pc.cpu.load.value)) + unit_load,
+            'temp_gpu': 'Temp: ' + str(int(data_request.pc.gpu.temp_core.value)) + unit_temp,
+            'load_gpu': 'Load: ' + str(int(data_request.pc.gpu.load.value)) + unit_load
         }
         count = 0
         update_data['cores'] = {}
@@ -88,5 +88,13 @@ class Data:
 
         update_data['storage']['string'] = list(map(lambda storage: storage.name + " " + str(storage.used.value) + storage.used.unit, data_request.pc.storage))
         update_data['storage']['data'] = list(map(lambda s: int(float(s.used.value)), data_request.pc.storage))[::-1]
+
+
+        update_data['chip'] = []
+        for temp_chip in data_request.pc.mother_board.temp:
+            key = list(temp_chip.keys())[0].replace('Temperature', 'Temp')
+            update_data['chip'].append(key + ": " + str(temp_chip[list(temp_chip.keys())[0]].value) + temp_chip[list(temp_chip.keys())[0]].unit)
+
+        update_data['ram'] = 'used: ' + str(data_request.pc.ram.load.value) + " " + data_request.pc.ram.load.unit
 
         return update_data

@@ -11,7 +11,7 @@ class Graphic:
 
     def __init__(self, name=None):
         self.env = get_config()
-        self.fig = plt.Figure(facecolor='black', figsize=(4, 2.1), dpi=110)
+        self.fig = plt.Figure(facecolor='black', figsize=(4, 2.15), dpi=110)
         self.fig.text(0.05, 0.9, name, fontdict=font_label)
         self.text_temp = self.fig.text(0.5, 0.9, 'Temp: ', fontdict=font_temp)
         self.text_load = self.fig.text(0.2, 0.9, 'Load: ', fontdict=font_load)

@@ -1,6 +1,6 @@
 font_label = {'family': 'serif',
-             'color': 'white',
-             'weight': 'normal',
+             'color': 'deepskyblue',
+             'weight': 'bold',
              'size': 12
              }
 font_temp = {'family': 'serif',
@@ -19,10 +19,15 @@ font_normal = {'family': 'serif',
                'weight': 'normal',
                'size': 9
                }
+font_storage = {'family': 'serif',
+               'color': 'white',
+               'weight': 'bold',
+               'size':11
+               }
 
 
 font_small = {'family': 'serif',
                'color': 'white',
-               'weight': 'bold',
+               'weight': 'normal',
                'size': 5
                }

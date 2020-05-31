@@ -94,7 +94,7 @@ class App(tk.Frame):
                 self.figures.graphics[0].text_temp.set_text(new_data['temp_cpu'])
                 self.figures.graphics[0].text_load.set_text(new_data['load_cpu'])
                 count = 0
-                if len(new_data['graphics'][0][1]) % 30 == 0:
+                if len(new_data['graphics'][0][1]) % 500 == 0:
                     if self.update_name in 'load':
                         self.update_name = 'frec'
                     else:
@@ -124,6 +124,13 @@ class App(tk.Frame):
                 for text_storeage in self.figures.table_text[1].list_storage:
                     self.figures.table_text[1].list_storage[count].set_text(new_data['storage']['string'][count])
                     self.figures.table_text[1].bar[count].set_width(new_data['storage']['data'][count])
+                    count +=1
+
+                self.figures.table_text[1].ram_text.set_text(new_data['ram'])
+
+                count =0
+                for t in self.figures.table_text[1].mother_temp:
+                    t.set_text(new_data['chip'][count])
                     count +=1
 
 
