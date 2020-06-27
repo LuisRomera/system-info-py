@@ -7,3 +7,6 @@ This application displays the PC information on a screen:
 * Fan and pump speed.
 
 It works on a raspberry PI. 
+
+## Setup
+Install open hardware monitor and start remote server.
